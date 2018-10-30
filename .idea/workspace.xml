@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="675e77e2-9336-44de-9c89-8dc17e6ce080" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MasterNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MasterNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/MasterNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/MasterNode.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -28,14 +27,15 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="17" />
-          <entry key="java" value="3062" />
+          <entry key="java" value="3064" />
+          <entry key="txt" value="90" />
           <entry key="xml" value="37" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3062" />
-          <entry key="PLAIN_TEXT" value="17" />
+          <entry key="JAVA" value="3064" />
+          <entry key="PLAIN_TEXT" value="107" />
           <entry key="XML" value="37" />
         </counts>
       </usages-collector>
@@ -61,7 +61,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/MasterNode.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="254">
-              <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
+              <caret line="23" column="24" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -72,8 +72,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+            <state relative-caret-position="240">
+              <caret line="119" column="33" lean-forward="true" selection-start-line="119" selection-start-column="33" selection-end-line="119" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1258#1259#0" expanded="true" />
@@ -206,7 +206,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540904377553" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540904535049" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -253,12 +253,20 @@
       <option name="presentableId" value="Default" />
       <updated>1540826611220</updated>
       <workItem from="1540826617814" duration="2220000" />
-      <workItem from="1540832443835" duration="22050000" />
+      <workItem from="1540832443835" duration="22222000" />
     </task>
+    <task id="LOCAL-00001" summary="Refactored Client Code to Load 20000 Urls and create 2 Threads for Crawling slave node">
+      <created>1540904410646</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1540904410646</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24270000" />
+    <option name="totallyTimeSpent" value="24442000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -282,7 +290,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3289689" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3289689" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -308,6 +316,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Refactored Client Code to Load 20000 Urls and create 2 Threads for Crawling slave node" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored Client Code to Load 20000 Urls and create 2 Threads for Crawling slave node" />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/poi/poi/3.17/poi-3.17.jar!/org/apache/poi/ss/usermodel/Row.class">
@@ -359,7 +371,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/MasterNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
-          <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
+          <caret line="23" column="24" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -368,8 +380,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+        <state relative-caret-position="240">
+          <caret line="119" column="33" lean-forward="true" selection-start-line="119" selection-start-column="33" selection-end-line="119" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1258#1259#0" expanded="true" />

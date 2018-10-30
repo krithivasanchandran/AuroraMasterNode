@@ -76,9 +76,10 @@ public class LoadUrls extends Thread{
                     }
                     break;
                 }
+
+                rowcounter++;
             }
 
-            rowcounter++;
 
             System.out.println(" Total URls in bucket1 --------------> " + bucket1.size());
             System.out.println(" Total URls in bucket2 --------------> " + bucket2.size());
