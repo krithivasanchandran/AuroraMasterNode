@@ -155,8 +155,6 @@ public class LoadUrls extends Thread{
 
             System.out.println("Success returned a 200 Ok Response");
         }
-
-
     }
 
 }
