@@ -119,7 +119,8 @@ public final class AmazonEc2SpinUp {
                 .withKeyName(keypairname)
                 .withMinCount(1)
                 .withMaxCount(1)
-                .withSecurityGroups(securityGroupName);
+                .withSecurityGroups(securityGroupName)
+                .setUserData(https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html);
 
         instanceId = rootec2.runInstances(runInstancesRequest).getReservation().getInstances().get(0).getInstanceId();
 
