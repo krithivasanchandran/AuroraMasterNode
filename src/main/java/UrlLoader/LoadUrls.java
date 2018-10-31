@@ -149,7 +149,7 @@ public class LoadUrls extends Thread{
 
             System.out.println("Failed : HTTP Error code : "
                     + conn.getResponseCode());
-            Thread.sleep(25000);
+            Thread.sleep(20000);
 
         }else if(conn.getResponseCode() == 200){
 
