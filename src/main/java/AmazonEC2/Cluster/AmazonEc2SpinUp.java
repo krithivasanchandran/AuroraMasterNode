@@ -7,6 +7,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.model.*;
+import org.apache.commons.codec.binary.Base64;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,8 +23,8 @@ public final class AmazonEc2SpinUp {
     static {
         // put your accesskey and secretkey here
         credentials = new BasicAWSCredentials(
-                "AKIAI6H7CTPVGIVJBMVA",
-                "U/lm/bD2TcOkv26aJfwJ77SBxBMK0yyr3jTD60oX"
+                "",
+                ""
         );
     }
 
@@ -113,18 +114,24 @@ public final class AmazonEc2SpinUp {
         authorizeInBoundConnections(rootec2,ipallowtraffic);
         final String privkeypair = createKeyPair(rootec2);
 
-        RunInstancesRequest runInstancesRequest = new RunInstancesRequest()
-                .withImageId("ami-976020ed")
-                .withInstanceType("t2.micro")
-                .withKeyName(keypairname)
-                .withMinCount(1)
-                .withMaxCount(1)
-                .withSecurityGroups(securityGroupName)
-                .setUserData(https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html);
+        StringBuilder userDataBuilder = new StringBuilder();
+        userDataBuilder.append("#!/bin/bash \n");
+        userDataBuilder.append("yum update -y \n");
+        userDataBuilder.append("yum install java-1.8.0 -y \n");
+        userDataBuilder.append("aws s3 cp s3://aurorachallenge/amazonaurora-1.0.jar . --region=us-east-1a");
+        userDataBuilder.append("java -Xms256m -Xmx850m -XX:MaxGCPauseMillis=80 -XX:+UseAdaptiveSizePolicy –XX:GCTimeRatio=19" +
+                " -XX:InitiatingOccupancyFraction -jar amazonaurora-1.0.jar\n");
+        byte[] userDataFinal = Base64.encodeBase64(userDataBuilder.toString().getBytes());
+        String userDataEncodedwithBase64 = new String(userDataFinal);
 
-        instanceId = rootec2.runInstances(runInstancesRequest).getReservation().getInstances().get(0).getInstanceId();
-
-        System.out.println("Created Instance Id is " + instanceId);
+        RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
+        runInstancesRequest.withImageId("ami-976020ed");
+        runInstancesRequest.withInstanceType("t2.micro");
+        runInstancesRequest.withKeyName(keypairname);
+        runInstancesRequest.withMinCount(1);
+        runInstancesRequest.withMaxCount(100);
+        runInstancesRequest.withSecurityGroups(securityGroupName);
+        runInstancesRequest.setUserData(userDataEncodedwithBase64);
 
         StartInstancesRequest startInstancesRequest = new StartInstancesRequest()
                 .withInstanceIds(instanceId);

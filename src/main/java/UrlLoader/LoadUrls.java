@@ -21,9 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /*
  * Thread runs on 4 CPU core - Initiates 2 Threads for execution.
@@ -34,8 +32,7 @@ public class LoadUrls extends Thread{
 
     private static final String file_name = "C:\\Users\\Dell\\Documents\\MasterWebCrawler\\20000websites.xlsx";
 
-    private static final Set<String> bucket1 = new HashSet<String>();
-    private static final Set<String> bucket2 = new HashSet<String>();
+    private static final Queue<String> q = new LinkedList<>();
 
     private static String hostnamePort=null;
 
@@ -69,11 +66,7 @@ public class LoadUrls extends Thread{
                     Cell cell = cellIterator.next();
                     System.out.println(cell.toString());
 
-                    if(rowcounter % 2 == 0){
-                        bucket1.add(cell.toString().trim());
-                    }else{
-                        bucket2.add(cell.toString().trim());
-                    }
+                   q.add(cell.toString());
                     break;
                 }
 
@@ -81,8 +74,7 @@ public class LoadUrls extends Thread{
             }
 
 
-            System.out.println(" Total URls in bucket1 --------------> " + bucket1.size());
-            System.out.println(" Total URls in bucket2 --------------> " + bucket2.size());
+            System.out.println(" Total URls in Queue --------------> " + q.size());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -107,25 +99,17 @@ public class LoadUrls extends Thread{
 
     private void fireThreads(LoadUrls threadOne, LoadUrls threadTwo){
 
-        bucket1.forEach((t1) -> {
+       while(q.size() != 0){
             try {
-                threadOne.run(t1);
+                threadOne.run(q.remove());
             } catch (IOException e) {
                 e.getMessage();
             } catch (InterruptedException e) {
                 e.getMessage();
             }
-        });
+        }
 
-        bucket2.forEach((t2) -> {
-            try{
-                threadTwo.run(t2);
-            }catch (IOException e) {
-                e.getMessage();
-            } catch (InterruptedException e) {
-                e.getMessage();
-            }
-        });
+
     }
 
     public void run(String url1) throws IOException, InterruptedException {
