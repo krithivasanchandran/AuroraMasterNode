@@ -88,19 +88,11 @@ public class LoadUrls extends Thread{
     }
 
 
-    public void createThread(){
-
-        LoadUrls threadOne = new LoadUrls();
-        LoadUrls threadTwo = new LoadUrls();
-        CloseableHttpResponse response=null;
-
-        fireThreads(threadOne,threadTwo);
-    }
-
-    private void fireThreads(LoadUrls threadOne, LoadUrls threadTwo){
+    public void fireThreads(Queue<String> q){
 
        while(q.size() != 0){
             try {
+                LoadUrls threadOne = new LoadUrls();
                 threadOne.run(q.remove());
             } catch (IOException e) {
                 e.getMessage();
@@ -112,7 +104,7 @@ public class LoadUrls extends Thread{
 
     }
 
-    public void run(String url1) throws IOException, InterruptedException {
+    private void run(String url1) throws IOException, InterruptedException {
 
 
         URL url = new URL("http://"+hostnamePort+"/startCrawl?url="+url1);

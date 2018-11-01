@@ -16,11 +16,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+/*
+ * Important Information - This Class runs once - generating the Keypair name
+ * ,security groupname . If you rerunning this Application you need to rename
+ * these two strings - securityGroupName and keypairname. For now I have deleted
+ * this , you could run it once.
+ */
+
 public final class AmazonEc2SpinUp {
 
     private static final AWSCredentials credentials;
 
-    private static final Map<String, InstanceDetails> createdInstanceCredentials = new ConcurrentHashMap<String, InstanceDetails>();
+    private static Map<String, InstanceDetails> createdInstanceCredentials = new ConcurrentHashMap<String, InstanceDetails>();
 
     static {
         // put your accesskey and secretkey here
@@ -35,11 +42,32 @@ public final class AmazonEc2SpinUp {
     private static final String keypairname = "mysqlaurora";
     private String instanceId = "";
 
+    private void validateKeys(){
+        final String accessKey = credentials.getAWSAccessKeyId();
+
+        if(accessKey.isEmpty() || accessKey == null || accessKey.length() == 0){
+            System.out.println("For Running the Application in AWS Access Keys is mandatory");
+            System.out.println("Please navigate to AmazonEc2SpinUp.java class and enter the access keys");
+            System.exit(0);
+        }
+
+        final String secretKey = credentials.getAWSSecretKey();
+
+        if(secretKey.isEmpty() || secretKey == null || secretKey.length() == 0){
+            System.out.println("For Running the Application in AWS Secret Keys is mandatory");
+            System.out.println("Please navigate to AmazonEc2SpinUp and enter the secret keys");
+            System.exit(0);
+        }
+    }
+
     /*
      * US_WEST_1("us-west-1", "US West (N. California)"),
      */
 
     private AmazonEC2 spinUp() {
+
+        validateKeys();
+
         AmazonEC2 ec2Client = AmazonEC2ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
@@ -114,7 +142,7 @@ public final class AmazonEc2SpinUp {
      * -
      */
 
-    private AmazonEC2 launchinstance() throws UnsupportedEncodingException {
+    public AmazonEC2 launchinstance() throws UnsupportedEncodingException {
 
         AmazonEC2 rootec2 = spinUp();
 
@@ -141,8 +169,10 @@ public final class AmazonEc2SpinUp {
         userDataBuilder.append("aws s3 cp s3://aurorachallenge/amazonaurora-1.0.jar --region=us-east-1a" + "\n");
         userDataBuilder.append("nohup java -Xms256m -Xmx850m -XX:MaxGCPauseMillis=80 –XX:GCTimeRatio=19" +
                 " -XX:InitiatingOccupancyFraction -jar amazonaurora-1.0.jar" + "\n");
+
         byte[] userDataFinal = Base64.encodeBase64(userDataBuilder.toString().getBytes("UTF-8"));
         String userDataEncodedwithBase64 = new String(userDataFinal, "UTF-8");
+
 
         /*
          * Spins UP 120 Instances - Requires special Capacity Provisional Request.
@@ -241,7 +271,8 @@ public final class AmazonEc2SpinUp {
     }
 
     /*
-     * Describe Instance
+     * Describe Instance - Prints the Instance Id, Public DNS name and IP Address of the
+     * Spinned up instance.
      */
 
     private void describeInstance(AmazonEC2 ec2client) {
@@ -294,8 +325,10 @@ public final class AmazonEc2SpinUp {
          */
         final AmazonEC2 rootec2 = spin.launchinstance();
 
-        // Wait for 4 minutes for the instances to start and change its state
-        // from pending to running state.
+        /*
+         * Wait for 4 minutes for the instances to start and change its state
+         * from pending to running state.
+         */
         Thread.sleep(240000);
 
         /*
@@ -329,6 +362,8 @@ public final class AmazonEc2SpinUp {
                     .withInstanceIds(instanceId);
 
            System.out.println("Instances with the following Instance ID has been shutdown " + instanceId);
+
+           System.out.println(" You can navigate to the RDS database to check the crawled data");
         }
 
     }
