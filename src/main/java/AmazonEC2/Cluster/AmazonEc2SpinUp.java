@@ -9,16 +9,18 @@ import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.model.*;
 import org.apache.commons.codec.binary.Base64;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class AmazonEc2SpinUp {
 
     private static final AWSCredentials credentials;
 
-    private static final Map<String,InstanceDetails> createdInstanceCredentials = new ConcurrentHashMap<String,InstanceDetails>();
+    private static final Map<String, InstanceDetails> createdInstanceCredentials = new ConcurrentHashMap<String, InstanceDetails>();
 
     static {
         // put your accesskey and secretkey here
@@ -31,9 +33,9 @@ public final class AmazonEc2SpinUp {
     private static final String securityGroupName = "challenge";
     private static final String securityGroupDescription = "Coding hard for hackathon challenge";
     private static final String keypairname = "mysqlaurora";
-    private String instanceId="";
+    private String instanceId = "";
 
-    private AmazonEC2 spinUp(){
+    private AmazonEC2 spinUp() {
         AmazonEC2 ec2Client = AmazonEC2ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
@@ -43,16 +45,16 @@ public final class AmazonEc2SpinUp {
         return (ec2Client != null) ? ec2Client : null;
     }
 
-    private CreateSecurityGroupResult createSecurityGroup(AmazonEC2 ec2Client){
+    private CreateSecurityGroupResult createSecurityGroup(AmazonEC2 ec2Client) {
 
         CreateSecurityGroupRequest createSecurityGroupRequest = new CreateSecurityGroupRequest()
                 .withGroupName(securityGroupName)
                 .withDescription(securityGroupDescription);
 
-        if(spinUp() != null){
+        if (spinUp() != null) {
             CreateSecurityGroupResult createSecurityGroupResult = ec2Client.createSecurityGroup(createSecurityGroupRequest);
             return createSecurityGroupResult;
-        }else{
+        } else {
             System.out.println("Error creating ec2 instance with the given credentials" + this.getClass().getName());
         }
 
@@ -64,18 +66,18 @@ public final class AmazonEc2SpinUp {
      * we’ll have to configure our security group to allow traffic.
      * Let’s allow HTTP traffic coming from any IP address:
      */
-    private IpPermission allowHTTPTraffic(){
+    private IpPermission allowHTTPTraffic() {
 
         IpRange ipRange = new IpRange().withCidrIp("0.0.0.0/0");
         IpPermission ipPermission = new IpPermission()
-                .withIpv4Ranges(Arrays.asList(new IpRange[] { ipRange }))
+                .withIpv4Ranges(Arrays.asList(new IpRange[]{ipRange}))
                 .withIpProtocol("tcp")
                 .withFromPort(80)
                 .withToPort(80);
         return ipPermission;
     }
 
-    private void authorizeInBoundConnections(AmazonEC2 rootec2,IpPermission ipallow){
+    private void authorizeInBoundConnections(AmazonEC2 rootec2, IpPermission ipallow) {
 
         AuthorizeSecurityGroupIngressRequest authorizeSecurityGroupIngressRequest
                 = new AuthorizeSecurityGroupIngressRequest()
@@ -84,7 +86,7 @@ public final class AmazonEc2SpinUp {
         rootec2.authorizeSecurityGroupIngress(authorizeSecurityGroupIngressRequest);
     }
 
-    private String createKeyPair(AmazonEC2 rootec2){
+    private String createKeyPair(AmazonEC2 rootec2) {
         CreateKeyPairRequest createKeyPairRequest = new CreateKeyPairRequest()
                 .withKeyName(keypairname);
         CreateKeyPairResult createKeyPairResult = rootec2.createKeyPair(createKeyPairRequest);
@@ -103,27 +105,33 @@ public final class AmazonEc2SpinUp {
      * - Image Id: ami-976020ed , AMI Name - Alpine-3.7-r2-Hardened-EC2
      *
      * - Heart of the Ec2 Instance Creation -
+     *
+     * -
      */
 
-    private AmazonEC2 launchinstance(){
+    private AmazonEC2 launchinstance() throws UnsupportedEncodingException {
 
         AmazonEC2 rootec2 = spinUp();
 
-        CreateSecurityGroupResult securitygroupres  = createSecurityGroup(rootec2);
+        CreateSecurityGroupResult securitygroupres = createSecurityGroup(rootec2);
         IpPermission ipallowtraffic = allowHTTPTraffic();
-        authorizeInBoundConnections(rootec2,ipallowtraffic);
+        authorizeInBoundConnections(rootec2, ipallowtraffic);
         final String privkeypair = createKeyPair(rootec2);
 
         StringBuilder userDataBuilder = new StringBuilder();
-        userDataBuilder.append("#!/bin/bash \n");
-        userDataBuilder.append("yum update -y \n");
-        userDataBuilder.append("yum install java-1.8.0 -y \n");
-        userDataBuilder.append("aws s3 cp s3://aurorachallenge/amazonaurora-1.0.jar . --region=us-east-1a");
+        userDataBuilder.append("#!/bin/bash" + "\n");
+        userDataBuilder.append("yum update -y" + "\n");
+        userDataBuilder.append("yum install java-1.8.0 -y" + "\n");
+        userDataBuilder.append("aws s3 cp s3://aurorachallenge/amazonaurora-1.0.jar --region=us-east-1a" + "\n");
         userDataBuilder.append("java -Xms256m -Xmx850m -XX:MaxGCPauseMillis=80 -XX:+UseAdaptiveSizePolicy –XX:GCTimeRatio=19" +
-                " -XX:InitiatingOccupancyFraction -jar amazonaurora-1.0.jar\n");
-        byte[] userDataFinal = Base64.encodeBase64(userDataBuilder.toString().getBytes());
-        String userDataEncodedwithBase64 = new String(userDataFinal);
+                " -XX:InitiatingOccupancyFraction -jar amazonaurora-1.0.jar" + "\n");
+        byte[] userDataFinal = Base64.encodeBase64(userDataBuilder.toString().getBytes("UTF-8"));
+        String userDataEncodedwithBase64 = new String(userDataFinal, "UTF-8");
 
+        /*
+         * Spins UP 100 Instances - Requires special Capacity Provisional Request.
+         * For testing you could use 20 t2.micro instances in local.
+         */
         RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
         runInstancesRequest.withImageId("ami-976020ed");
         runInstancesRequest.withInstanceType("t2.micro");
@@ -133,10 +141,29 @@ public final class AmazonEc2SpinUp {
         runInstancesRequest.withSecurityGroups(securityGroupName);
         runInstancesRequest.setUserData(userDataEncodedwithBase64);
 
-        StartInstancesRequest startInstancesRequest = new StartInstancesRequest()
-                .withInstanceIds(instanceId);
+        /*
+         * Returns the List of instances to run.
+         */
+        List<Instance> listOfInstances = rootec2.runInstances(runInstancesRequest).getReservation().getInstances();
 
-        rootec2.startInstances(startInstancesRequest);
+        /*
+          Critical Block Spins up 100 Instances .
+
+         */
+        synchronized (this) {
+
+            for (Instance instanceObject : listOfInstances) {
+
+                final String instanceId = instanceObject.getInstanceId();
+
+                final StartInstancesRequest startInstancesRequest = new StartInstancesRequest()
+                        .withInstanceIds(instanceId);
+
+
+                rootec2.startInstances(startInstancesRequest);
+
+            }
+        }
 
         System.out.println("Started the Instance !!!!");
         return rootec2;
@@ -146,7 +173,7 @@ public final class AmazonEc2SpinUp {
      * Monitor Instance
      */
 
-    private void MonitorInstance(AmazonEC2 ec2Client,String yourInstanceId){
+    private void MonitorInstance(AmazonEC2 ec2Client, String yourInstanceId) {
 
         // Monitor Instances
         MonitorInstancesRequest monitorInstancesRequest = new MonitorInstancesRequest()
@@ -160,7 +187,7 @@ public final class AmazonEc2SpinUp {
      * Unmonitor Instance Request
      */
 
-    private void unMonitorInstance(AmazonEC2 ec2Client,String yourInstanceId){
+    private void unMonitorInstance(AmazonEC2 ec2Client, String yourInstanceId) {
         UnmonitorInstancesRequest unmonitorInstancesRequest = new UnmonitorInstancesRequest()
                 .withInstanceIds(yourInstanceId);
 
@@ -171,7 +198,7 @@ public final class AmazonEc2SpinUp {
      * Rebooting Instance
      */
 
-    private void rebootInstance(AmazonEC2 ec2Client,String yourInstanceId){
+    private void rebootInstance(AmazonEC2 ec2Client, String yourInstanceId) {
         RebootInstancesRequest rebootInstancesRequest = new RebootInstancesRequest()
                 .withInstanceIds(yourInstanceId);
 
@@ -182,7 +209,7 @@ public final class AmazonEc2SpinUp {
      * Stopping Instance
      */
 
-    private void stopInstance(String yourInstanceId,AmazonEC2 ec2Client){
+    private void stopInstance(String yourInstanceId, AmazonEC2 ec2Client) {
         // Stop an Instance
         StopInstancesRequest stopInstancesRequest = new StopInstancesRequest()
                 .withInstanceIds(yourInstanceId);
@@ -199,36 +226,92 @@ public final class AmazonEc2SpinUp {
      * Describe Instance
      */
 
-    private void describeInstance(AmazonEC2 ec2client){
+    private void describeInstance(AmazonEC2 ec2client) {
 
         DescribeInstancesRequest describeInstancesRequest = new DescribeInstancesRequest();
         DescribeInstancesResult response = ec2client.describeInstances(describeInstancesRequest);
 
         List<Instance> listOfInstances = response.getReservations().get(0).getInstances();
 
-        for(Instance instance : listOfInstances){
-            String instanceId = instance.getInstanceId();
-            String publicdnsname = instance.getPublicDnsName();
-            String publicipaddress = instance.getPublicIpAddress();
+        for (Instance instance : listOfInstances) {
 
-            System.out.println(" Created Instance Id is " + instanceId);
-            System.out.println(" Public DNS name is " + publicdnsname);
-            System.out.println(" Public IP adderss is " + publicipaddress);
+            if (instance.getState().getName().equalsIgnoreCase("pending") ||
+                    instance.getState().getName().equalsIgnoreCase("0")) {
 
-            InstanceDetails iddetails = new InstanceDetails();
-            iddetails.setPublicDnsname(publicdnsname);
-            iddetails.setPublicIPaddress(publicipaddress);
-            createdInstanceCredentials.put(instanceId, iddetails);
+                System.out.println("These are the pending EC2 instances with pending state " +
+                        "even after giving a grace time of 2 minutes" + instance.getInstanceId());
 
+                continue;
+            }
+
+            if (instance.getState().getName().equalsIgnoreCase("running") ||
+                    instance.getState().getName().equalsIgnoreCase("0")) {
+
+                String instanceId = instance.getInstanceId();
+                String publicdnsname = instance.getPublicDnsName();
+                String publicipaddress = instance.getPublicIpAddress();
+
+
+                System.out.println(" Created Instance Id is " + instanceId);
+                System.out.println(" Public DNS name is " + publicdnsname);
+                System.out.println(" Public IP adderss is " + publicipaddress);
+
+                InstanceDetails iddetails = new InstanceDetails();
+                iddetails.setPublicDnsname(publicdnsname);
+                iddetails.setPublicIPaddress(publicipaddress);
+
+                createdInstanceCredentials.put(instanceId, iddetails);
+            }
         }
     }
 
-    private static void createinstance() throws InterruptedException {
-        AmazonEc2SpinUp spin = new AmazonEc2SpinUp();
-        AmazonEC2 rootec2 = spin.launchinstance();
+    private static void createinstance() throws InterruptedException, UnsupportedEncodingException {
 
+        AmazonEc2SpinUp spin = new AmazonEc2SpinUp();
+
+        /*
+         * Critical launches 100 micro instances
+         * To change the number of instances to 20
+         * navigate to this method and set runInstancesRequest.withMaxCount(20);
+         */
+        final AmazonEC2 rootec2 = spin.launchinstance();
+
+        // Wait for 4 minutes for the instances to start and change its state
+        // from pending to running state.
+        Thread.sleep(240000);
+
+        /*
+         * Descibes the Instance ID , public DNS Name
+         * and Public IP Address.
+         */
         spin.describeInstance(rootec2);
 
+        /*
+         * Send the Instances for scheduled crawling.
+         */
+        final MasterCrawlController masterCrawler = new MasterCrawlController();
+        masterCrawler.sendInstanceDetailsCrawl(createdInstanceCredentials);
+
+        spin.shutdowninstance(rootec2, createdInstanceCredentials);
     }
 
+    /*
+     * Shutting down the EC2Instance.
+     */
+
+    public void shutdowninstance(final AmazonEC2 rootec2, Map<String, InstanceDetails> createdInstanceCredentials) {
+
+        Set<Map.Entry<String, InstanceDetails>> entries = createdInstanceCredentials.entrySet();
+
+        for (Map.Entry<String, InstanceDetails> k : entries) {
+            final String instanceId = k.getKey();
+            final InstanceDetails instanceDetails = k.getValue();
+
+            StopInstancesRequest stopInstancesRequest = new StopInstancesRequest()
+                    .withInstanceIds(instanceId);
+
+           System.out.println("Instances with the following Instance ID has been shutdown " + instanceId);
+        }
+
+    }
 }

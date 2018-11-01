@@ -40,7 +40,7 @@ public class LoadUrls extends Thread{
         hostnamePort = hostname;
     }
 
-    public void readFile() throws IOException {
+    public Queue<String> readFile() throws IOException {
 
         XSSFWorkbook workbook = null;
         XSSFSheet sheet = null;
@@ -84,7 +84,7 @@ public class LoadUrls extends Thread{
 
             if(workbook != null){ workbook.close();}
         }
-
+        return q;
     }
 
 
