@@ -30,16 +30,20 @@ public final class AmazonEc2SpinUp {
         );
     }
 
-    private static final String securityGroupName = "challenge";
+    private static final String securityGroupName = "aurorachallenge";
     private static final String securityGroupDescription = "Coding hard for hackathon challenge";
     private static final String keypairname = "mysqlaurora";
     private String instanceId = "";
+
+    /*
+     * US_WEST_1("us-west-1", "US West (N. California)"),
+     */
 
     private AmazonEC2 spinUp() {
         AmazonEC2 ec2Client = AmazonEC2ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(Regions.US_EAST_1)
+                .withRegion(Regions.US_WEST_1)
                 .build();
 
         return (ec2Client != null) ? ec2Client : null;
@@ -64,7 +68,8 @@ public final class AmazonEc2SpinUp {
     /*
      * Since security groups don’t allow any network traffic by default,
      * we’ll have to configure our security group to allow traffic.
-     * Let’s allow HTTP traffic coming from any IP address:
+     * Let’s allow HTTP traffic coming from any IP address: 8080
+     * Open up Port 8080 for external traffic
      */
     private IpPermission allowHTTPTraffic() {
 
@@ -72,8 +77,8 @@ public final class AmazonEc2SpinUp {
         IpPermission ipPermission = new IpPermission()
                 .withIpv4Ranges(Arrays.asList(new IpRange[]{ipRange}))
                 .withIpProtocol("tcp")
-                .withFromPort(80)
-                .withToPort(80);
+                .withFromPort(8080)
+                .withToPort(8080);
         return ipPermission;
     }
 
@@ -118,26 +123,39 @@ public final class AmazonEc2SpinUp {
         authorizeInBoundConnections(rootec2, ipallowtraffic);
         final String privkeypair = createKeyPair(rootec2);
 
+        /*
+         * UserData - Init Scripts - That Installs Java 8 and runs the java program with the following
+         * memory optimized JVM arguments -
+         * -XX:MaxGCPauseMillis=80 - For high availability - Reduces the GC Pauses to lesser value
+         * –XX:GCTimeRatio=19 - 5% of the total time for GC and throughput goal of 95%
+         * -XX:InitiatingOccupancyFraction - Estimates the Amount of Garbage heap
+         * and start Garbage collection as late as possible to avoid issues.
+         *
+         * nohup – use for terminal output goes into the nohup.out file.
+         */
+
         StringBuilder userDataBuilder = new StringBuilder();
         userDataBuilder.append("#!/bin/bash" + "\n");
         userDataBuilder.append("yum update -y" + "\n");
         userDataBuilder.append("yum install java-1.8.0 -y" + "\n");
         userDataBuilder.append("aws s3 cp s3://aurorachallenge/amazonaurora-1.0.jar --region=us-east-1a" + "\n");
-        userDataBuilder.append("java -Xms256m -Xmx850m -XX:MaxGCPauseMillis=80 -XX:+UseAdaptiveSizePolicy –XX:GCTimeRatio=19" +
+        userDataBuilder.append("nohup java -Xms256m -Xmx850m -XX:MaxGCPauseMillis=80 –XX:GCTimeRatio=19" +
                 " -XX:InitiatingOccupancyFraction -jar amazonaurora-1.0.jar" + "\n");
         byte[] userDataFinal = Base64.encodeBase64(userDataBuilder.toString().getBytes("UTF-8"));
         String userDataEncodedwithBase64 = new String(userDataFinal, "UTF-8");
 
         /*
-         * Spins UP 100 Instances - Requires special Capacity Provisional Request.
+         * Spins UP 120 Instances - Requires special Capacity Provisional Request.
          * For testing you could use 20 t2.micro instances in local.
+         * Image Id: ami-976020ed , AMI Name - Alpine-3.7-r2-Hardened-EC2 - Lesser weight
+         * If you are using different
          */
         RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
         runInstancesRequest.withImageId("ami-976020ed");
         runInstancesRequest.withInstanceType("t2.micro");
         runInstancesRequest.withKeyName(keypairname);
-        runInstancesRequest.withMinCount(1);
-        runInstancesRequest.withMaxCount(100);
+        runInstancesRequest.withMinCount(100);
+        runInstancesRequest.withMaxCount(120);
         runInstancesRequest.withSecurityGroups(securityGroupName);
         runInstancesRequest.setUserData(userDataEncodedwithBase64);
 
