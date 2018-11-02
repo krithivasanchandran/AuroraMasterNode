@@ -94,8 +94,8 @@ public final class AmazonEc2SpinUp {
     /*
      * Since security groups don’t allow any network traffic by default,
      * we’ll have to configure our security group to allow traffic.
-     * Let’s allow HTTP traffic coming from any IP address: 8080
-     * Open up Port 8080 for external traffic
+     * Let’s allow HTTP traffic coming from any IP address: 80
+     * Open up Port 80 for external traffic
      */
     private IpPermission allowHTTPTraffic() {
 
@@ -153,8 +153,6 @@ public final class AmazonEc2SpinUp {
          * UserData - Init Scripts - That Installs Java 8 and runs the java program with the following
          * memory optimized JVM arguments -
          * -XX:MaxGCPauseMillis=80 - For high availability - Reduces the GC Pauses to lesser value
-         * –XX:GCTimeRatio=19 - 5% of the total time for GC and throughput goal of 95%
-         * -XX:InitiatingOccupancyFraction - Estimates the Amount of Garbage heap
          * and start Garbage collection as late as possible to avoid issues.
          *
          * nohup – use for terminal output goes into the nohup.out file.
@@ -175,7 +173,8 @@ public final class AmazonEc2SpinUp {
          * Spins UP 120 Instances - Requires special Capacity Provisional Request.
          * For testing you could use 20 t2.micro instances in local.
          * Image Id: ami-013be31976ca2c322 , AMI Name - Amazon Linux EC2 SSD
-         * If you are using different
+         *  You are allowed to use 20 instances without capacity reservation- You could change that
+         *  in withMaxCount(20) method below.
          */
         RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
         runInstancesRequest.withImageId("ami-013be31976ca2c322");
@@ -192,7 +191,7 @@ public final class AmazonEc2SpinUp {
         List<Instance> listOfInstances = rootec2.runInstances(runInstancesRequest).getReservation().getInstances();
 
         /*
-          Critical Block Spins up 100 Instances .
+          Critical Block Spins up 100-120 Instances .
 
          */
         synchronized (this) {
@@ -215,31 +214,6 @@ public final class AmazonEc2SpinUp {
     }
 
     /*
-     * Monitor Instance
-     */
-
-    private void MonitorInstance(AmazonEC2 ec2Client, String yourInstanceId) {
-
-        // Monitor Instances
-        MonitorInstancesRequest monitorInstancesRequest = new MonitorInstancesRequest()
-                .withInstanceIds(yourInstanceId);
-
-        ec2Client.monitorInstances(monitorInstancesRequest);
-
-    }
-
-    /*
-     * Unmonitor Instance Request
-     */
-
-    private void unMonitorInstance(AmazonEC2 ec2Client, String yourInstanceId) {
-        UnmonitorInstancesRequest unmonitorInstancesRequest = new UnmonitorInstancesRequest()
-                .withInstanceIds(yourInstanceId);
-
-        ec2Client.unmonitorInstances(unmonitorInstancesRequest);
-    }
-
-    /*
      * Rebooting Instance
      */
 
@@ -248,23 +222,6 @@ public final class AmazonEc2SpinUp {
                 .withInstanceIds(yourInstanceId);
 
         ec2Client.rebootInstances(rebootInstancesRequest);
-    }
-
-    /*
-     * Stopping Instance
-     */
-
-    private void stopInstance(String yourInstanceId, AmazonEC2 ec2Client) {
-        // Stop an Instance
-        StopInstancesRequest stopInstancesRequest = new StopInstancesRequest()
-                .withInstanceIds(yourInstanceId);
-
-        ec2Client.stopInstances(stopInstancesRequest)
-                .getStoppingInstances()
-                .get(0)
-                .getPreviousState()
-                .getName();
-
     }
 
     /*
@@ -372,7 +329,7 @@ public final class AmazonEc2SpinUp {
 
            System.out.println("Instances with the following Instance ID has been shutdown " + instanceId);
 
-           System.out.println(" You can navigate to the RDS database to check the crawled data");
+           System.out.println(" You can navigate to the RDS Aurora mysql database to check the crawled data");
         }
 
     }
