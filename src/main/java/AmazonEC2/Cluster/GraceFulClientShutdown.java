@@ -23,7 +23,7 @@ public class GraceFulClientShutdown {
            final InstanceDetails instanceDetails = k.getValue();
 
            StringBuilder gracefulUrlBuilder = new StringBuilder();
-           gracefulUrlBuilder.append("https://").append(instanceDetails.getPublicIPaddress()).append(":8080/shutdown");
+           gracefulUrlBuilder.append("http://").append(instanceDetails.getPublicIPaddress()).append("/shutdown");
 
            URL url = new URL(gracefulUrlBuilder.toString());
 

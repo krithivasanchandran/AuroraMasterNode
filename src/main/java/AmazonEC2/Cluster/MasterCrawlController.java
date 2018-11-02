@@ -59,10 +59,10 @@ public class MasterCrawlController {
                    final String seedUrl = urlQueue.remove();
 
                     /*
-                   * example: Url would be like: https://123.4.63.16:8080/startcrawl?url=https://amazon.com
+                   * example: Url would be like: https://123.4.63.16/startcrawl?url=https://amazon.com
                    */
 
-                   urlBuilder.append("https://").append(IPAddress).append(":8080/startCrawl?url=").append(seedUrl);
+                   urlBuilder.append("http://").append(IPAddress).append("/startCrawl?url=").append(seedUrl);
 
                    URL url = new URL(urlBuilder.toString());
 

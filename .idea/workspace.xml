@@ -4,9 +4,9 @@
     <list default="true" id="675e77e2-9336-44de-9c89-8dc17e6ce080" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/AmazonEc2SpinUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/AmazonEc2SpinUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MasterNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MasterNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/GraceFulClientShutdown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/GraceFulClientShutdown.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/MasterCrawlController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/MasterCrawlController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/MasterNode.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -29,30 +29,30 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="17" />
-          <entry key="java" value="13759" />
-          <entry key="txt" value="551" />
+          <entry key="java" value="14391" />
+          <entry key="txt" value="654" />
           <entry key="xml" value="38" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="13759" />
-          <entry key="PLAIN_TEXT" value="568" />
+          <entry key="JAVA" value="14391" />
+          <entry key="PLAIN_TEXT" value="671" />
           <entry key="XML" value="38" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="class" value="12" />
-          <entry key="java" value="39" />
+          <entry key="class" value="16" />
+          <entry key="java" value="43" />
           <entry key="md" value="1" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="12" />
-          <entry key="JAVA" value="39" />
+          <entry key="CLASS" value="16" />
+          <entry key="JAVA" value="43" />
           <entry key="Markdown" value="1" />
           <entry key="XML" value="1" />
         </counts>
@@ -61,11 +61,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/MasterNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="26" column="35" lean-forward="true" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
+            <state relative-caret-position="846">
+              <caret line="47" column="24" lean-forward="true" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -76,20 +76,21 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/AmazonEc2SpinUp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="47">
-              <caret line="49" column="77" selection-start-line="49" selection-start-column="77" selection-end-line="49" selection-end-column="77" />
+            <state relative-caret-position="-198">
+              <caret line="34" column="10" lean-forward="true" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1177#1194#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
+            <state relative-caret-position="125">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -110,8 +111,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/GraceFulClientShutdown.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-51">
-              <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+            <state relative-caret-position="83">
+              <caret line="29" column="40" lean-forward="true" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -141,20 +142,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/MasterCrawlController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+            <state relative-caret-position="234">
+              <caret line="94" column="58" selection-start-line="94" selection-start-column="58" selection-end-line="94" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.10/httpcore-4.4.10.jar!/org/apache/http/StatusLine.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -181,6 +173,8 @@
     <findStrings>
       <find>ec2Challenge</find>
       <find>userData</find>
+      <find>withImageId</find>
+      <find>image</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -193,11 +187,12 @@
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/InstanceDetails.java" />
+        <option value="$PROJECT_DIR$/src/main/java/MasterNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/MasterCrawlController.java" />
         <option value="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/GraceFulClientShutdown.java" />
         <option value="$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java" />
-        <option value="$PROJECT_DIR$/src/main/java/MasterNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/AmazonEc2SpinUp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/AWSRDSService.java" />
       </list>
     </option>
   </component>
@@ -302,7 +297,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541084801933" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541176756127" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -367,7 +362,7 @@
       <option name="presentableId" value="Default" />
       <updated>1540826611220</updated>
       <workItem from="1540826617814" duration="2220000" />
-      <workItem from="1540832443835" duration="55005000" />
+      <workItem from="1540832443835" duration="64959000" />
     </task>
     <task id="LOCAL-00001" summary="Refactored Client Code to Load 20000 Urls and create 2 Threads for Crawling slave node">
       <created>1540904410646</created>
@@ -432,11 +427,18 @@
       <option name="project" value="LOCAL" />
       <updated>1541082178778</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="UserFriendly commands added to the MasterNode class .">
+      <created>1541084864095</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1541084864095</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57225000" />
+    <option name="totallyTimeSpent" value="67179000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -451,7 +453,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.25340393" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25340393" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -460,7 +462,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3289689" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3289689" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -495,7 +497,8 @@
     <MESSAGE value="User Data scripts added" />
     <MESSAGE value="AWS SDK Implementation - Graceful Shutdown and Shutdown of instances Implemented" />
     <MESSAGE value="Region Support Added - US WEST 1 - North California - Created Special Capacity Request for 120 Instances." />
-    <option name="LAST_COMMIT_MESSAGE" value="Region Support Added - US WEST 1 - North California - Created Special Capacity Request for 120 Instances." />
+    <MESSAGE value="UserFriendly commands added to the MasterNode class ." />
+    <option name="LAST_COMMIT_MESSAGE" value="UserFriendly commands added to the MasterNode class ." />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/poi/poi/3.17/poi-3.17.jar!/org/apache/poi/ss/usermodel/Row.class">
@@ -548,13 +551,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="1053" column="43" selection-start-line="1053" selection-start-column="43" selection-end-line="1053" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="571" column="6" selection-start-line="571" selection-start-column="6" selection-end-line="571" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -619,19 +615,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-ec2/1.11.438/aws-java-sdk-ec2-1.11.438-sources.jar!/com/amazonaws/services/ec2/model/Instance.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="1103" column="17" selection-start-line="1103" selection-start-column="17" selection-end-line="1103" selection-end-column="17" />
-          <folding>
-            <element signature="e#30077#30078#0" expanded="true" />
-            <element signature="e#30120#30121#0" expanded="true" />
-            <element signature="e#31991#31992#0" expanded="true" />
-            <element signature="e#32024#32025#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/util/Map.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
@@ -650,13 +633,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-core/1.11.438/aws-java-sdk-core-1.11.438.jar!/com/amazonaws/regions/Regions.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="15" column="4" lean-forward="true" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-core/1.11.438/aws-java-sdk-core-1.11.438.jar!/com/amazonaws/auth/BasicAWSCredentials.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
@@ -664,10 +640,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/GraceFulClientShutdown.java">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-ec2/1.11.438/aws-java-sdk-ec2-1.11.438-sources.jar!/com/amazonaws/services/ec2/AmazonEC2ClientBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-51">
-          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+        <state relative-caret-position="127">
+          <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/MasterCrawlController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="94" column="58" selection-start-line="94" selection-start-column="58" selection-end-line="94" selection-end-column="58" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -691,55 +682,98 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/MasterCrawlController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/GraceFulClientShutdown.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+        <state relative-caret-position="83">
+          <caret line="29" column="40" lean-forward="true" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-ec2/1.11.438/aws-java-sdk-ec2-1.11.438-sources.jar!/com/amazonaws/services/ec2/model/Instance.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
-          <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
+          <caret line="2006" column="36" selection-start-line="2006" selection-start-column="36" selection-end-line="2006" selection-end-column="36" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#30077#30078#0" expanded="true" />
+            <element signature="e#30120#30121#0" expanded="true" />
+            <element signature="e#31991#31992#0" expanded="true" />
+            <element signature="e#32024#32025#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-ec2/1.11.438/aws-java-sdk-ec2-1.11.438-sources.jar!/com/amazonaws/services/ec2/AmazonEC2ClientBuilder.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-ec2/1.11.438/aws-java-sdk-ec2-1.11.438-sources.jar!/com/amazonaws/services/ec2/model/GroupIdentifier.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
+        <state relative-caret-position="-2232">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/AmazonEc2SpinUp.java">
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/util/List.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="47">
-          <caret line="49" column="77" selection-start-line="49" selection-start-column="77" selection-end-line="49" selection-end-column="77" />
+        <state relative-caret-position="181">
+          <caret line="1060" column="23" selection-start-line="1060" selection-start-column="23" selection-end-line="1060" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-core/1.11.438/aws-java-sdk-core-1.11.438.jar!/com/amazonaws/regions/Regions.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-rds/1.11.438/aws-java-sdk-rds-1.11.438.jar!/com/amazonaws/services/rds/model/CreateDBInstanceRequest.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="494" column="16" selection-start-line="494" selection-start-column="16" selection-end-line="494" selection-end-column="16" />
+          <folding>
+            <element signature="e#14559#14560#0" expanded="true" />
+            <element signature="e#14605#14606#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/AWSRDSService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="135" column="42" selection-start-line="135" selection-start-column="32" selection-end-line="135" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1910#1911#0" expanded="true" />
+            <element signature="e#1952#1953#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/MasterNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="26" column="35" lean-forward="true" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
+        <state relative-caret-position="846">
+          <caret line="47" column="24" lean-forward="true" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AmazonEC2/Cluster/AmazonEc2SpinUp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-198">
+          <caret line="34" column="10" lean-forward="true" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1177#1194#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/UrlLoader/LoadUrls.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

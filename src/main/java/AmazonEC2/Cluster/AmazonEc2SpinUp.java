@@ -10,10 +10,7 @@ import com.amazonaws.services.ec2.model.*;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /*
@@ -28,6 +25,7 @@ public final class AmazonEc2SpinUp {
     private static final AWSCredentials credentials;
 
     private static Map<String, InstanceDetails> createdInstanceCredentials = new ConcurrentHashMap<String, InstanceDetails>();
+    public static List<GroupIdentifier> listOfSecurityGroupIdentifierOfEc2 = new ArrayList<GroupIdentifier>();
 
     static {
         // put your accesskey and secretkey here
@@ -105,8 +103,8 @@ public final class AmazonEc2SpinUp {
         IpPermission ipPermission = new IpPermission()
                 .withIpv4Ranges(Arrays.asList(new IpRange[]{ipRange}))
                 .withIpProtocol("tcp")
-                .withFromPort(8080)
-                .withToPort(8080);
+                .withFromPort(80)
+                .withToPort(80);
         return ipPermission;
     }
 
@@ -135,7 +133,7 @@ public final class AmazonEc2SpinUp {
     }
 
     /*
-     * - Image Id: ami-976020ed , AMI Name - Alpine-3.7-r2-Hardened-EC2
+     * - Image Id: ami-013be31976ca2c322 , AMI Name - Amazon Linux EC2 SSD
      *
      * - Heart of the Ec2 Instance Creation -
      *
@@ -164,11 +162,10 @@ public final class AmazonEc2SpinUp {
 
         StringBuilder userDataBuilder = new StringBuilder();
         userDataBuilder.append("#!/bin/bash" + "\n");
-        userDataBuilder.append("yum update -y" + "\n");
-        userDataBuilder.append("yum install java-1.8.0 -y" + "\n");
-        userDataBuilder.append("aws s3 cp s3://aurorachallenge/amazonaurora-1.0.jar --region=us-east-1a" + "\n");
-        userDataBuilder.append("nohup java -Xms256m -Xmx850m -XX:MaxGCPauseMillis=80 –XX:GCTimeRatio=19" +
-                " -XX:InitiatingOccupancyFraction -jar amazonaurora-1.0.jar" + "\n");
+        userDataBuilder.append("sudo yum update -y" + "\n");
+        userDataBuilder.append("sudo yum install java-1.8.0 -y" + "\n");
+        userDataBuilder.append("wget https://s3.amazonaws.com/aurorachallenge/amazonaurora-1.0.jar" + "\n");
+        userDataBuilder.append("sudo nohup java -Xms256m -Xmx850m -XX:MaxGCPauseMillis=80 -jar amazonaurora-1.0.jar --server.port=80" + "\n");
 
         byte[] userDataFinal = Base64.encodeBase64(userDataBuilder.toString().getBytes("UTF-8"));
         String userDataEncodedwithBase64 = new String(userDataFinal, "UTF-8");
@@ -177,11 +174,11 @@ public final class AmazonEc2SpinUp {
         /*
          * Spins UP 120 Instances - Requires special Capacity Provisional Request.
          * For testing you could use 20 t2.micro instances in local.
-         * Image Id: ami-976020ed , AMI Name - Alpine-3.7-r2-Hardened-EC2 - Lesser weight
+         * Image Id: ami-013be31976ca2c322 , AMI Name - Amazon Linux EC2 SSD
          * If you are using different
          */
         RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
-        runInstancesRequest.withImageId("ami-976020ed");
+        runInstancesRequest.withImageId("ami-013be31976ca2c322");
         runInstancesRequest.withInstanceType("t2.micro");
         runInstancesRequest.withKeyName(keypairname);
         runInstancesRequest.withMinCount(100);
@@ -299,6 +296,18 @@ public final class AmazonEc2SpinUp {
                 String instanceId = instance.getInstanceId();
                 String publicdnsname = instance.getPublicDnsName();
                 String publicipaddress = instance.getPublicIpAddress();
+
+                /*
+                 * List of Security Group Identifier used for inbound requests to AuroraMySQl.
+                 */
+
+                java.util.List<GroupIdentifier>  securityidentifier = instance.getSecurityGroups();
+
+                for(GroupIdentifier g : securityidentifier){
+                    System.out.println("The security group Id to be added to Inbound MYSQL Instance : " + g.getGroupId());
+                    System.out.println("GroupName of inbound MySQL Instance is :" + g.getGroupName());
+                    listOfSecurityGroupIdentifierOfEc2.add(g);
+                }
 
 
                 System.out.println(" Created Instance Id is " + instanceId);
