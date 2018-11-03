@@ -34,9 +34,9 @@ public class GraceFulClientShutdown {
 
                if(conn.getResponseCode() == 200){
                    System.out.println("Success returned a 200 Ok Response");
-                   System.out.println("Now shutting down the spring microservice running on Instance ID: "+ instanceId);
+                   System.out.println("Now Gracefully shutting down the crawl microservice running on Instance ID: "+ instanceId);
                }else{
-                   System.out.println("Make sure the instance is running , shutdown of spring microservice failed");
+                   System.out.println("Make sure the instance is running , Graceful shutdown of microservice failed");
                }
 
            } catch (IOException e) {

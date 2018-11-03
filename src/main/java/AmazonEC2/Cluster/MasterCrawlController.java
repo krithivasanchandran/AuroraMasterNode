@@ -34,11 +34,11 @@ public class MasterCrawlController {
                    //First phase of URL Submission skip it.
                    continue;
                }else{
-                   /* Wait for the Thread for 33 seconds to go for second Iteration of
+                   /* Wait for the Thread for 33 seconds to go for successive Iteration of
                     * Crawl Seed URL Submission . In this way the Master Node honours
                     * The client SLA.
                     */
-                   Thread.sleep(33000);
+                   Thread.sleep(40000);
                }
 
                for(String instanceId : instanceKeySet){
@@ -52,7 +52,7 @@ public class MasterCrawlController {
                    /*
                     * Removes the URL from the head of the Queue.
                     */
-                    if(urlQueue.size() == 0){
+                    if(urlQueue.size() == 1){
                         break;
                     }
 

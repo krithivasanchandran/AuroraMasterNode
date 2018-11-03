@@ -309,6 +309,10 @@ public final class AmazonEc2SpinUp {
         final MasterCrawlController masterCrawler = new MasterCrawlController();
         masterCrawler.sendInstanceDetailsCrawl(createdInstanceCredentials);
 
+        /*
+         * Shutdown Instance - Method.
+         */
+
         spin.shutdowninstance(rootec2, createdInstanceCredentials);
     }
 
@@ -328,6 +332,8 @@ public final class AmazonEc2SpinUp {
                     .withInstanceIds(instanceId);
 
            System.out.println("Instances with the following Instance ID has been shutdown " + instanceId);
+
+           System.out.println(" Ip Address of the corresponding instance is shutting down :: " + instanceDetails.getPublicIPaddress());
 
            System.out.println(" You can navigate to the RDS Aurora mysql database to check the crawled data");
         }
