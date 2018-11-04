@@ -28,17 +28,19 @@ import java.util.*;
  * bucket 1 contains 10,000 urls , bucket 2 contains 10,000 Urls.
  */
 
-public class LoadUrls extends Thread{
+public class LoadUrls{
 
     private static final String file_name = "C:\\Users\\Dell\\Documents\\MasterWebCrawler\\20000websites.xlsx";
 
-    private static final Queue<String> q = new LinkedList<>();
+    private static final Queue<String> q = new LinkedList<String>();
 
     private static String hostnamePort=null;
 
     public static void SetHostname(String hostname){
         hostnamePort = hostname;
     }
+
+    public String getHostName(){return hostnamePort; }
 
     public Queue<String> readFile() throws IOException {
 
@@ -65,8 +67,8 @@ public class LoadUrls extends Thread{
 
                     Cell cell = cellIterator.next();
                     System.out.println(cell.toString());
-
-                   q.add(cell.toString());
+                    String fetchedURL = cell.toString();
+                   q.add(fetchedURL);
                     break;
                 }
 
@@ -88,12 +90,14 @@ public class LoadUrls extends Thread{
     }
 
 
-    public void fireThreads(Queue<String> q){
+    public void fireThreads(Queue<String> q,final String host){
 
        while(q.size() != 0){
             try {
                 LoadUrls threadOne = new LoadUrls();
-                threadOne.run(q.remove());
+                String str = q.remove();
+                System.out.println(" URL removed from the queue is " + str);
+                threadOne.initiatecrawl(str,host);
             } catch (IOException e) {
                 e.getMessage();
             } catch (InterruptedException e) {
@@ -104,10 +108,10 @@ public class LoadUrls extends Thread{
 
     }
 
-    private void run(String url1) throws IOException, InterruptedException {
+    private void initiatecrawl(String url1,String host) throws IOException, InterruptedException {
 
 
-        URL url = new URL("http://"+hostnamePort+"/startCrawl?url="+url1);
+        URL url = new URL("http://"+host+"/startCrawl?url="+url1);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
 

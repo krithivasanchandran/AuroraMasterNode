@@ -27,9 +27,9 @@ public class MasterNode{
                 scanner.nextLine();
                 String hostname = scanner.nextLine();
                 LoadUrls loadFile = new LoadUrls();
-                loadFile.SetHostname(hostname);
+                System.out.println("The hostname you entered is : " + hostname);
                 Queue<String> urlQueue = loadFile.readFile();
-                loadFile.fireThreads(urlQueue);
+                loadFile.fireThreads(urlQueue,hostname);
 
             case 2:
                 System.out.println("You have chosen to Run 120 micro instances in the AWS ");
